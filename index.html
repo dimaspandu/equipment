@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Equipment</title>
+		<script>
+		    var ooo = {
+		    	pointing: null,
+		    	installEquipment: null
+		    };
+
+		    ooo.pointing = function (a, b){
+				if(a === "body"){
+					return document.body.appendChild(b);
+				}
+				else if(a === "head"){
+					return document.head.appendChild(b);
+				}
+				else{
+					return document.getElementById(a).appendChild(b);
+				}
+			};
+
+			ooo.installEquipment = function (a){
+				if(a.css.length !== 0){
+					for(b in a.css){
+						var c = document.createElement("link");
+
+						c.setAttribute("rel", "stylesheet");
+						c.setAttribute("type", "text/css");
+						c.setAttribute("href", a.css[b].path);
+						c.setAttribute("status", "installed");
+
+						ooo.pointing(a.css[b].point, c);
+					}
+				}
+
+				if(a.js.length !== 0){
+					for(b in a.js){
+						var c = document.createElement("script");
+
+						c.setAttribute("type", "text/javascript");
+						c.setAttribute("src", a.js[b].path);
+						c.setAttribute("status", "installed");
+
+						ooo.pointing(a.js[b].point, c);
+					}
+				}
+			};
+		</script>
+	</head>
+	<body>
+    	<script>
+    		ooo.installEquipment({
+    			css: [{
+    				path: "css/index.css",
+    				point: "head"
+    			}],
+    			js: [{
+    				path: "js/index.js",
+    				point: "body"
+    			}]
+    		});
+    	</script>
+	</body>
+</html>
